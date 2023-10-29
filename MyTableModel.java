@@ -1,22 +1,18 @@
 package Pertemuan7;
 
-import javax.swing.table.AbstractTableModel;
+import javax.swing.table.*;
 import java.util.ArrayList;
-
+import java.util.List;
 
 public class MyTableModel extends AbstractTableModel {
-
-    private final String[] columnNames = {"Nama", "No HP", "Jenis Kelamin", "Alamat"};
-    private final ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
-
+    private String[] columnNames = {"Nama", "Nomor HP", "Jenis Kelamin", "Alamat"};
+    private ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 
     public int getColumnCount() {
-
         return columnNames.length;
     }
 
     public int getRowCount() {
-
         return data.size();
     }
 
@@ -25,11 +21,12 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     public Object getValueAt(int row, int col) {
-        return data.get(row).get(col);
+        List<String> rowItem = data.get(row);
+        return rowItem.get(col);
     }
 
     public boolean isCellEditable(int row, int col) {
-        return true;
+        return false;
     }
 
     public ArrayList<ArrayList<String>> getData() {
@@ -43,20 +40,19 @@ public class MyTableModel extends AbstractTableModel {
         fireTableCellUpdated(rowIndex, columnIndex);
     }
 
-
     public void add(ArrayList<String> value) {
         data.add(value);
+
         fireTableRowsInserted(data.size() - 1, data.size() - 1);
     }
 
-    public void edit(ArrayList<String> value, int row) {
-        data.set(row, value);
+    public void update(ArrayList<String> newValue, int row) {
+        data.set(row, newValue);
         fireTableRowsUpdated(row, row);
     }
 
-    public void remove(int row) {
+    public void delete(int row) {
         data.remove(row);
         fireTableRowsDeleted(row, row);
     }
-
 }
